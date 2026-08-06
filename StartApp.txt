@@ -1,0 +1,7 @@
+@echo off
+
+:: Start App
+cd /d "\client"
+start "Start Server" cmd /k "npm run dev"
+
+exit

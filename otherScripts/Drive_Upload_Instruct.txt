@@ -1,0 +1,66 @@
+//////////////Upload Files to google drive////////////////////
+Step 1: Create the Project and Enable the API
+	1.Go to the Google Cloud Console. https://console.cloud.google.com/
+
+	2.At the top left (next to the "Google Cloud" logo), click the Project Dropdown and select New Project. Name it "My Drive Uploader" and click Create.
+
+	3.Once the project is created, make sure it is selected in that same top dropdown.
+	 
+	4.Go to the Google Drive API Library. https://console.cloud.google.com/apis/library/drive.googleapis.com
+
+	5.Click the blue Enable button.
+
+Step 2: Setup the OAuth Consent Screen (Crucial) 
+	This is where most people get stuck. You have to tell Google that you are allowed to use your own app.
+
+	1.Go to the OAuth Consent Screen. https://console.cloud.google.com/apis/credentials/consent
+
+	2.Select User Type: External and click Create.
+
+	3.App Information:
+
+	4.App name: "My Node Uploader"
+
+	5.User support email: Select your Gmail.
+
+	6.Developer contact info: Type your Gmail again.
+
+	7.Click Save and Continue.
+
+	8.Scopes: Click Add or Remove Scopes. In the filter box, type drive. Check the box for .../auth/drive (the one that says "See, edit, create, and delete all of your Google Drive files"). Click Update and then Save and Continue.
+
+	9.Test Users: Click + ADD USERS. Type your exact Gmail address. If you skip this, you will get an "Access Blocked" error later. Click Save and Continue.
+
+Step 3: Create the "Keys" (Credentials)
+	1.Go to the Credentials Page. https://console.cloud.google.com/apis/credentials
+
+	2.Click + CREATE CREDENTIALS at the top and select OAuth client ID.
+
+	3.Application type: Select Web application.
+
+	4.Name: You can leave it as "Web client 1".
+
+	5.Authorized redirect URIs: Click + ADD URI and paste this exactly: https://developers.google.com/oauthplayground
+
+	6.Click Create. A popup will show your Client ID and Client Secret. Copy these and save them in a Notepad.
+
+Step 4: Get the Refresh Token
+	Since your Node.js app doesn't have a "Login with Google" button, we use the OAuth Playground to get a permanent key.
+
+	1.Go to OAuth 2.0 Playground. https://developers.google.com/oauthplayground/
+
+	2.On the right side, click the Settings icon (cog wheel).
+
+	3.Check the box "Use your own OAuth credentials".
+
+	4.Paste your Client ID and Client Secret that you just saved. Click Close.
+
+	5.On the left side (Step 1), scroll down to Drive API v3. Click the arrow to expand it.
+
+	6.Select https://www.googleapis.com/auth/drive.
+
+	7.Click the blue Authorize APIs button. It will take you to a Google Login page. Log in with your Gmail and click Continue/Allow when it warns you the app isn't verified.
+
+	8.Back on the Playground (Step 2), click the blue Exchange authorization code for tokens button.
+
+	You will now see a Refresh Token box. Copy that token. This is the "Master Key" for your Node.js code.
