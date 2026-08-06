@@ -20,12 +20,12 @@ export default function MonitoringPage(){
   
     useEffect(()=>{
 
-      getData();
       socketRef.current = io(BASE_API);
       socketRef.current.on("up-down-report", (data) => {
         setSecondsLeft(60)
         getData();
-    });       
+      }); 
+      getData();      
       // const fetchInterval = setInterval(() => {
       //   getData();
       //   setSecondsLeft(60); 
@@ -37,6 +37,8 @@ export default function MonitoringPage(){
   
       return () => {
         // clearInterval(fetchInterval);
+        socketRef.current.off("up-down-report");
+        socketRef.current.disconnect();
         clearInterval(timerInterval);
       };    
     },[])
