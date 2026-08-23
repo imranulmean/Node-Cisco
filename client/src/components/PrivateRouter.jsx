@@ -19,6 +19,7 @@ export default function PrivateRoute() {
             const data = await res.json();
             if(!data.success) {
                 alert(data.error)
+                localStorage.removeItem('sessionToken')
                 navigate('/login');
                 return
             }

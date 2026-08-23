@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import moment from 'moment';
 import Swal from 'sweetalert2';
 
-function List({tableId, tableName, mailList, sendMailList, handleCheckbox, showCheckbox, contactPersonNums, handleInputChange, contactArray, selectedIndex}){
+function List({tableId, tableName, mailList, sendMailList, handleCheckbox, showCheckbox, contactPersonNums, handleInputChange, contactArray, selectedIndex, sessionToken}){
 
     // {d.branchId}: {d.router}
     const [modes, setModes]=useState({router:'Name', branchId:'ID'})
@@ -35,7 +35,7 @@ function List({tableId, tableName, mailList, sendMailList, handleCheckbox, showC
                                     <td className="w-1/2">
                                         <div className="">
                                             {
-                                                showCheckbox &&
+                                                showCheckbox && sessionToken &&
                                                 <label className="relative inline-flex items-center cursor-pointer">
                                                     <input
                                                         id={`pending-${index}`}
@@ -49,7 +49,7 @@ function List({tableId, tableName, mailList, sendMailList, handleCheckbox, showC
                                             }
                                             <span className="text-sm text-center ml-2"><b>{d.branchId}: {d.router}</b></span>
                                             { 
-                                                showCheckbox &&                                             
+                                                showCheckbox && sessionToken &&
                                                 <input type="text" value={contactPersonNums[`${d.branchId}-cp-${d.ispName}`] ?? ''}
                                                         onChange={(e) => handleInputChange(`${d.branchId}-cp-${d.ispName}`, e.target.value)}
                                                         id={`${d.branchId}-cp-${d.ispName}`} placeholder="Branch Number" 
@@ -98,9 +98,14 @@ function List({tableId, tableName, mailList, sendMailList, handleCheckbox, showC
                                             <p className="text-sm text-center">{d.email}</p>                                          
                                             {
                                                 d.createdAt && 
-                                                <p className="text-sm text-center">
-                                                <b>Sent:</b> {moment(d.createdAt).format("MMMM Do YYYY, h:mm a")}
-                                                </p>
+                                                <>
+                                                    <p className="text-sm text-center">
+                                                        <b>Sent:</b> {moment(d.createdAt).format("MMMM Do YYYY, h:mm a")}
+                                                    </p>
+                                                    {/* <p className="text-sm text-center">
+                                                        By: {d.sentBy}
+                                                    </p>                                                  */}
+                                                </>                                               
                                             }
                                         </div>                                    
                                     </td>                                    
@@ -117,7 +122,7 @@ function List({tableId, tableName, mailList, sendMailList, handleCheckbox, showC
 
 export default function SendMailCompo({mainData, branches, subBranches, socketRef}){
 
-    const sessionToken= localStorage.getItem('sessionToken')
+    const [sessionToken, setSessionToken]= useState(localStorage.getItem('sessionToken'));
     let mailList=[];
     const [finalList, setFinalList] = useState([]);
     const [sendMailList, setSendmailList] = useState([]);
@@ -131,6 +136,7 @@ export default function SendMailCompo({mainData, branches, subBranches, socketRe
     const [contactArray, setContactArray] = useState([]);
     const [selectedIndex, setSelectedIndex]= useState();
 
+    
 
     const handleInputChange = (key, value) => {
         setContactPersonNums(prev => ({ ...prev, [key]: value }));
@@ -159,8 +165,26 @@ export default function SendMailCompo({mainData, branches, subBranches, socketRe
 
         initialize();
         getBranchContacts();
+        checkSession();        
       
     },[]);
+
+    const checkSession = async ()=>{
+        
+        try {
+            if(!sessionToken) return;
+            const res = await fetch(`${BASE_API}/checkSession/${sessionToken}`);
+            const data = await res.json();
+            if(!data.success) {
+                setSessionToken('');
+                localStorage.removeItem('sessionToken')                
+            }
+        } catch (error) {
+            alert(error)
+        }
+
+        
+    }    
 
     const getBranchContacts= async() =>{
         const res = await fetch(`${BASE_API}/getBranchContacts`);
@@ -379,7 +403,8 @@ export default function SendMailCompo({mainData, branches, subBranches, socketRe
                <div className="w-1/3 flex flex-col gap-2">
                     <div className="h-[400px] overflow-y-auto w-full border border-cyan-900 p-2 rounded-lg">                        
                         <List key={JSON.stringify(newMailList)} tableId={'newListTable'} tableName={'New List'} mailList={newMailList} sendMailList={sendMailList} handleCheckbox={handleCheckbox} showCheckbox={true}
-                              contactPersonNums={contactPersonNums} handleInputChange={handleInputChange} selectedIndex={selectedIndex} contactArray = {contactArray} />
+                              contactPersonNums={contactPersonNums} handleInputChange={handleInputChange} selectedIndex={selectedIndex} contactArray = {contactArray} 
+                              sessionToken={sessionToken}  />
                     </div>
                     {
                         !loading &&

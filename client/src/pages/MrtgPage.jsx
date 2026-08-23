@@ -27,6 +27,7 @@ export default function MrtgPage(){
     const [health, setHealth] = useState({});
     const [memoryPool, setMemoryPool] = useState({});
     const [deviceSerial, setDeviceSerial] = useState({});
+    const [loading, setLoading] = useState(false);
     
     const BASE_API=import.meta.env.VITE_API_BASE_URL;
     const {router, host} = useParams();
@@ -41,14 +42,15 @@ export default function MrtgPage(){
     }, []);       
   
     const getSnmp=()=>{
+        setLoading(true);
         fetch(`${BASE_API}/snmpStatus/${host}`)
         .then((res) => res.json())
         .then((res) => {
-          console.log(res)
           setHealth(res.health || {}); 
           setMemoryPool(res.memoryPool || {})
           setDeviceSerial(res.deviceSerial || {})
-          setData(res.data);                   
+          setData(res.data); 
+          setLoading(false);                  
         });
     }
     
@@ -62,9 +64,18 @@ export default function MrtgPage(){
 
     return (
         <>
-        <HeaderPublic/>       
+        <HeaderPublic/>        
         <div className="p-4">
-            <div className="flex flex-col gap-1 mb-4  border border-green-900 rounded-lg">
+           
+            <div className="flex flex-col items-center gap-1 mb-4  border border-green-900 rounded-lg">
+                {
+                    loading &&
+                    <div className="max-w-md w-full flex items-center justify-center gap-2 mt-2 bg-green-900 text-gray-200 border rounded-lg ">
+                        <FaAtom size="1.3rem"/>
+                        Loading Data ...
+                    </div>                     
+                }
+                
                 <h2 className="text-center p-4"><b>{router}: {host}</b></h2>
                 <div className="w-full flex justify-center gap-2 p-4">
                     <div className="w-1/4 bg-green-900 text-gray-200 p-4 border rounded-lg flex flex-col items-center justify-center">

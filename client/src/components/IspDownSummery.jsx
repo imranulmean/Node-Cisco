@@ -30,7 +30,13 @@ export default function IspDownSummery({data, loopBacks, openModal}){
     return(
         <div className="flex flex-col gap-2 border border-green-900 rounded-lg p-2 mt-2">
             <p className="text-lg text-gray-600 flex gap-2">
-                <FaSkullCrossbones color="red" size="1.5rem"/><span className="animated-text font-semibold">Link Down Summary: </span> <FaSkullCrossbones color="red" size="1.5rem"/> 
+                {/* <span class="relative flex h-3 w-3">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-900 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-green-900"></span>
+                </span>                 */}
+                <FaSkullCrossbones color="red" size="1.5rem"/>
+                    <span className="animated-text font-semibold">Link Down Summary: </span> 
+                <FaSkullCrossbones color="red" size="1.5rem"/> 
             </p>
             <div className="flex flex-wrap gap-2">
                 {

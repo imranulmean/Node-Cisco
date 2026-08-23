@@ -73,8 +73,10 @@ const io = new Server(server, {
   };  
 
 io.on("connection", (socket) => {
-    // console.log("User connected for Terminal session");
+    const ip = socket.handshake.headers["x-forwarded-for"]?.split(",")[0].trim() ||
+              socket.handshake.address;
     console.log("Clients:", io.engine.clientsCount);
+    console.log("Client IP:", ip);    
     let conn = new Client();
     let shellStream;
     
@@ -410,7 +412,7 @@ const routers = JSON.parse(fs.readFileSync('routers.json', "utf8")).routers;
 let todayFile;
 let lastClearedDate = null; // track last cleared date
 
-function getTodayFile() {
+export function getTodayFile() {
   for (let i = 0; i <= 2; i++) {
     const file = `downtime_folder/${moment().subtract(i, 'days').format('DD-MM-YYYY')}.json`;
     if (fs.existsSync(file)) {

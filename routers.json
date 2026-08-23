@@ -5120,6 +5120,22 @@
    "isp2Source": "10.154.64.226",
    "isp2Dest": "10.4.9.42",
    "addedBy": "imranul"
+  },
+  {
+   "host": "10.137.191.1",
+   "name": "CTG Zone",
+   "branchId": 997,
+   "branchType": "branch",
+   "authType": "acs",
+   "routerType": "legacy",
+   "mikrotik": "no",
+   "isp1Name": "BDCOM",
+   "isp1Source": "10.154.15.66",
+   "isp1Dest": "10.154.0.33",
+   "isp2Name": "AMBER-IT",
+   "isp2Source": "10.154.43.226",
+   "isp2Dest": "10.154.1.33",
+   "addedBy": "imranul"
   }
  ]
 }
