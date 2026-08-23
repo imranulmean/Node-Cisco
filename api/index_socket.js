@@ -453,7 +453,7 @@ async function main() {
   }
 
   function checkAndRun() {
-
+    
     // todayFile = `downtime_folder/${moment().format('DD-MM-YYYY')}.json`;
     todayFile = getTodayFile();
     const logDate = new Date();    
