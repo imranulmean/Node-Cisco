@@ -97,92 +97,104 @@ export default function HeaderPublic(){
                                 </Dropdown>
 
                                 <Dropdown arrowIcon={true} label="Other Web Devices/Links"
-                                          class='rounded-md text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white'
+                                          class='rounded-md text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white'                                          
                                 >
-                                    <Dropdown.Item as="a"
-                                        href="https://172.17.20.46/admin/login.jsp"
-                                        target='_blank'  
-                                    >
-                                        ISE
-                                    </Dropdown.Item>                                    
-                                    <Dropdown.Item as="a"                                         
-                                        href="https://172.30.2.40:8443/web_security_manager/authentication/identities"
-                                        target='_blank'
-                                    >
-                                        Branch WSA 1
-                                    </Dropdown.Item>
-                                    <Dropdown.Item as="a"
-                                        href="https://172.30.2.41:8443/web_security_manager/authentication/identities"
-                                        target='_blank'    
-                                    >
-                                        Branch WSA 2
-                                    </Dropdown.Item>
-                                    <Dropdown.Item as="a"
-                                        href="https://172.17.20.50/prod/web/12_5/web_security_manager/authentication/identities"
-                                        target='_blank'    
-                                    >
-                                        HO WSA Manager
-                                    </Dropdown.Item>
-                                    <Dropdown.Item as="a"
-                                            href="https://172.30.2.61:8443/login?referrer=https%3A%2F%2F172.30.2.61%3A8443%2Fweb_security_manager%2Fauthentication%2Fidentities"
-                                            target='_blank'    
-                                    >
-                                        HO WSA Appliance 1
-                                    </Dropdown.Item>
-                                    <Dropdown.Item as="a"
-                                            href="https://172.30.2.62:8443/login?referrer=https%3A%2F%2F172.30.2.62%3A8443%2Fweb_security_manager%2Fauthentication%2Fidentities"
-                                            target='_blank'    
-                                    >
-                                        HO WSA Appliance 2
-                                    </Dropdown.Item>
-                                    <Dropdown.Item as="a"
-                                            href="http://172.30.3.103/screens/frameset.html"
-                                            target='_blank'    
-                                    >
-                                        WLC
-                                    </Dropdown.Item>
-                                    <Dropdown.Item as="a"
-                                            href="https://172.30.2.51/#/app/dashboard"
-                                            target='_blank'    
-                                    >
-                                        VManage
-                                    </Dropdown.Item>
-                                    <Dropdown.Item as="a"
-                                            href="https://172.22.31.5/ccmadmin"
-                                            target='_blank'    
-                                    >
-                                        CUCM
-                                    </Dropdown.Item>
-                                    <Dropdown.Item as="a"
-                                            href="http://172.22.4.45:5173"
-                                            target='_blank'    
-                                    >
-                                        IP Phone List
-                                    </Dropdown.Item>                                    
-                                    <Dropdown.Item as="a"
-                                            href="http://mrtg.aibl.com.bd:8088/cacti/index.php?aibplcmrtg/AiblMrtg786"
+                                    <div className="h-[450px] overflow-y-auto">
+                                        <Dropdown.Item as="a"
+                                            href="https://172.17.20.46/admin/login.jsp"
+                                            target='_blank'  
+                                        >
+                                            ISE
+                                        </Dropdown.Item>                                    
+                                        <Dropdown.Item as="a"                                         
+                                            href="https://172.30.2.40:8443/web_security_manager/authentication/identities"
                                             target='_blank'
-                                    >
-                                        MRTG
-                                    </Dropdown.Item>
-                                    <Dropdown.Item as="a"
-                                            href="https://docs.google.com/spreadsheets/d/1RbvbE1ILEB30Ia5rCnOGHY4Xb5qMJFMP/edit?gid=1806638125#gid=1806638125"
-                                            target='_blank'
-                                    >
-                                        Wifi user List
-                                    </Dropdown.Item>
-                                    <Dropdown.Item as="a"
-                                            href="https://docs.google.com/spreadsheets/d/18yEhEIP1z1G4ITmms_zU_TWbo41qDq8si1RV52OfFYg/edit?gid=1657201219#gid=1657201219"
-                                            target='_blank'
-                                    >
-                                        Main Drive
-                                    </Dropdown.Item> 
-                                    {/* <Dropdown.Item as="a"
-                                            href="https://livetv.sysnolodge.com.au"
-                                            target='_blank'
-                                    >
-                                        Live TV
-                                    </Dropdown.Item>                                                                         */}
+                                        >
+                                            Branch WSA 1
+                                        </Dropdown.Item>
+                                        <Dropdown.Item as="a"
+                                            href="https://172.30.2.41:8443/web_security_manager/authentication/identities"
+                                            target='_blank'    
+                                        >
+                                            Branch WSA 2
+                                        </Dropdown.Item>
+                                        <Dropdown.Item as="a"
+                                            href="https://172.17.20.50/prod/web/12_5/web_security_manager/authentication/identities"
+                                            target='_blank'    
+                                        >
+                                            HO WSA Manager
+                                        </Dropdown.Item>
+                                        <Dropdown.Item as="a"
+                                                href="https://172.30.2.61:8443/login?referrer=https%3A%2F%2F172.30.2.61%3A8443%2Fweb_security_manager%2Fauthentication%2Fidentities"
+                                                target='_blank'    
+                                        >
+                                            HO WSA Appliance 1
+                                        </Dropdown.Item>
+                                        <Dropdown.Item as="a"
+                                                href="https://172.30.2.62:8443/login?referrer=https%3A%2F%2F172.30.2.62%3A8443%2Fweb_security_manager%2Fauthentication%2Fidentities"
+                                                target='_blank'    
+                                        >
+                                            HO WSA Appliance 2
+                                        </Dropdown.Item>
+                                        <Dropdown.Item as="a"
+                                                href="http://172.30.3.103/screens/frameset.html"
+                                                target='_blank'    
+                                        >
+                                            WLC
+                                        </Dropdown.Item>
+                                        <Dropdown.Item as="a"
+                                                href="https://172.30.2.51/#/app/dashboard"
+                                                target='_blank'    
+                                        >
+                                            VManage
+                                        </Dropdown.Item>
+                                        <Dropdown.Item as="a"
+                                                href="https://172.22.31.5/ccmadmin"
+                                                target='_blank'    
+                                        >
+                                            CUCM
+                                        </Dropdown.Item>
+                                        <Dropdown.Item as="a"
+                                                href="http://172.22.4.45:5173"
+                                                target='_blank'    
+                                        >
+                                            IP Phone List
+                                        </Dropdown.Item>                                    
+                                        <Dropdown.Item as="a"
+                                                href="http://mrtg.aibl.com.bd:8088/cacti/index.php?aibplcmrtg/AiblMrtg786"
+                                                target='_blank'
+                                        >
+                                            MRTG
+                                        </Dropdown.Item>
+                                        <Dropdown.Item as="a"
+                                                href="https://docs.google.com/spreadsheets/d/1RbvbE1ILEB30Ia5rCnOGHY4Xb5qMJFMP/edit?gid=1806638125#gid=1806638125"
+                                                target='_blank'
+                                        >
+                                            Wifi user List
+                                        </Dropdown.Item>
+                                        <Dropdown.Item as="a"
+                                                href="https://docs.google.com/spreadsheets/d/18yEhEIP1z1G4ITmms_zU_TWbo41qDq8si1RV52OfFYg/edit?gid=1657201219#gid=1657201219"
+                                                target='_blank'
+                                        >
+                                            Main Drive
+                                        </Dropdown.Item> 
+                                        <Dropdown.Item as="a"
+                                                href="http://172.23.1.21:8080/ndmrs/login.php"
+                                                target='_blank'
+                                        >
+                                            Downtime report
+                                        </Dropdown.Item>
+                                        <Dropdown.Item as="a"
+                                                href="http://172.23.1.28:5173/ipscan"
+                                                target='_blank'
+                                        >
+                                            IP Scanner
+                                        </Dropdown.Item>
+                                        <Dropdown.Item as={Link} to="/dhcpIpScan"
+                                        >
+                                            DHCP IP Scanner
+                                        </Dropdown.Item>      
+                                    </div>                              
                                 </Dropdown>                                                                                               
                                 {/* <Link to="/addRouter" class={`rounded-md px-3 py-2 text-sm font-medium ${location.pathname==='/addRouter'? 'text-white bg-white/5' : 'text-gray-300 hover:bg-white/5 hover:text-white'} `}>Add Router</Link> */}
                                 {/* <Link to="/getRouterSessions" class={`rounded-md px-3 py-2 text-sm font-medium ${location.pathname==='/getRouterSessions'? 'text-white bg-white/5' : 'text-gray-300 hover:bg-white/5 hover:text-white'} `}>Router Logs</Link> */}

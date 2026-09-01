@@ -6,7 +6,7 @@ import moment from 'moment';
 dotenv.config();
 
 const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',  
+  host: 'smtp.gmail.com', 
   port: 465,
   secure: true,
   auth: {
@@ -115,27 +115,38 @@ const sendEmails = async (users, req) => {
         const res1=await doc.save();
         await new Promise(r =>{
             setTimeout(r, 1000);
-        })        
+        })    
       } catch (err) {
         console.error(`Failed: `, err.message)
+        return false;
       }
     }
+    return true;
   }
 
 export const sendMail = async(req, res) =>{
   try{
-    
+    let success=true;
+    let message='Mail Send Success';
     if(sendingMails){
       return res.json({success: true, message:"Someone already sending, please wait "});
     }    
     sendingMails=true;
-    await sendEmails(req.body, req);
+    const mailSentSuccess=await sendEmails(req.body, req);
+    if(!mailSentSuccess){
+      success=false;
+      message= "Mail Send Failed";
+    }
+    else{
+      success=true;
+      message= "Mail Send Success"
+    }
     sendingMails=false;
 
     const io = req.app.get("io");    
     io.emit("mail-sent");
 
-    res.json({success: true, message:"Mail Send Success"});
+    res.json({success, message});
   }
   catch(err){
     res.json({success: false, message:"Mail Send Failed"});

@@ -1,98 +1,98 @@
-import { readFileSync, writeFileSync } from "fs";
+import { readFileSync, unlinkSync, writeFileSync } from "fs";
+import path from 'path'
+import { fileURLToPath } from 'url'
+import XLSX from "xlsx";
 
-const inputFile = "config.txt";
-const outputFile = "vlan.txt";
+const __filename = fileURLToPath(import.meta.url)
 
-const data = readFileSync(inputFile, "utf8");
+const __dirname = path.dirname(__filename)
 
-const regex = /^\s*switchport\s+(access|trunk allowed)\s+vlan\s+.*\b(3[1-5][0-9]{2})\b.*$/gm;
-const matches = data.match(regex) || [];
+// const inputFile = "D:/Node/MERN-Stack/Node-Cisco/public/localFolder/latest-dhcpd.conf";
+// const outputFileJson = "IpFile.json";
 
-writeFileSync(outputFile, matches.join("\n"));
+// const data = readFileSync(inputFile, "utf8").split('\n');
+// let mappedData=[];
+// data.map((d, index)=>{
+//         const trimmed=d.trim();
+//         if(trimmed.startsWith("#") && !trimmed.includes('option domain-name-servers')){
+//             const commaArray=trimmed.split(',');
+//             if(commaArray.length>1){
+//                 const name= commaArray[0].trim().split('#')[1].trim();
+//                 const dept = commaArray[commaArray.length - 1].trim();
+//                 let fixed_address;
+//                 if(!data[index + 2]?.trim()){
+//                     fixed_address = data[index + 4].trim().split(/\s+/);
+//                 }
+//                 else{
+//                     fixed_address = data[index + 3].trim().split(/\s+/);
+//                 }
+//                 const ip = fixed_address[1];
+//                 const obj={
+//                     name,
+//                     dept,
+//                     ip
+//                 }
+//                 mappedData.push(obj)
+//             }
 
-console.log(`✅ vlan.txt created with ${matches.length} entries`);
-
-
-//////////////////////////////////////////////////////
-// import { readFileSync, writeFileSync } from "fs";
-
-// const inputFile = "config.txt";
-// const outputFile = "vlan2.txt";
-
-// const data = readFileSync(inputFile, "utf8");
-// const lines = data.split("\n");
-
-// // VLAN range
-// const MIN = 3100;
-// const MAX = 3599;
-
-// const isInRange = (vlan) => vlan >= MIN && vlan <= MAX;
-
-// const results = lines.filter(line => {
-//   if (!line.includes("vlan")) return false;
-
-//   // Extract numbers and ranges: 3104, 3106-3110
-//   const tokens = line.match(/\d+(-\d+)?/g);
-//   if (!tokens) return false;
-
-//   return tokens.some(token => {
-//     if (token.includes("-")) {
-//       const [start, end] = token.split("-").map(Number);
-//       return start <= MAX && end >= MIN; // range overlap
-//     }
-//     return isInRange(Number(token));
-//   });
-// });
-// writeFileSync(outputFile, results.join("\n"));
-// console.log(`Saved ${results.length} VLAN entries to ${outputFile}`);
-//////////////////////////////////////////////////////
+//         }    
+//     })
 
 
-// import { readFileSync, writeFileSync } from "fs";
-// import XLSX from "xlsx";
+// writeFileSync(`${__dirname}/${outputFileJson}`, JSON.stringify(mappedData,null,2) );
 
-// const inputFile = "vlan.txt";
-// const outputFile = "vlan.xlsx";
+// console.log(`✅ created: ${__dirname}/${outputFileJson}`);
 
-// const lines = readFileSync(inputFile, "utf8")
-//   .split("\n")
-//   .map(l => l.trim())
-//   .filter(Boolean);
+// const inputFileJson=`${__dirname}/${outputFileJson}`;
+// const outputExcel='ip.xlsx';
+// const jsonObj= readFileSync(inputFileJson,'utf8' );
+// const parsedJson= JSON.parse(jsonObj);
+// const rows = parsedJson;
 
-// const rows = lines.map(line => {
-//   // VLAN
-//   const vlanMatch = line.match(/vlan\s+(\d+)/);
-//   const vlan = vlanMatch ? vlanMatch[1] : "";
-
-//   // Tenant
-//   const tenantMatch = line.match(/tenant\s+(\S+)/);
-//   const tenant = tenantMatch ? tenantMatch[1] : "";
-
-//   // Application
-//   const appMatch = line.match(/application\s+(\S+)/);
-//   const application = appMatch ? appMatch[1] : "";
-
-//   // EPG
-//   const epgMatch = line.match(/epg\s+(\S+)/);
-//   const epg = epgMatch ? epgMatch[1] : "";
-
-//   return {
-//     vlan,
-//     tenant,
-//     application,
-//     epg
-//   };
-// });
-
-// console.log(rows);
-// // Create worksheet
 // const worksheet = XLSX.utils.json_to_sheet(rows);
-
-// // Create workbook
 // const workbook = XLSX.utils.book_new();
-// XLSX.utils.book_append_sheet(workbook, worksheet, "VLANs");
+// XLSX.utils.book_append_sheet(workbook, worksheet, "iplist");
+// XLSX.writeFile(workbook, `${__dirname}/${outputExcel}`);
+// console.log(`✅ Excel File created:  ${__dirname}/${outputExcel}`);
+// unlinkSync(inputFileJson);
+// console.log(`✅ Deleted:  ${inputFileJson}`);
 
-// // Write XLSX file
-// XLSX.writeFile(workbook, outputFile);
 
-// console.log(`✅ vlan.xlsx created with ${rows.length} rows`);
+import SftpClient from "ssh2-sftp-client";
+
+const sftp = new SftpClient();
+
+const config = {
+    host: '172.17.20.101',
+    port: 8000,
+    username: 'imranul',
+    password: 'Asdf_1234'
+};
+
+async function downloadDhcpConfig() {
+
+    try {
+
+        await sftp.connect(config);
+
+        console.log("✅ Connected to DHCP server");
+
+        const remoteFile = "/etc/dhcp/dhcpd.conf";
+        const localFile = `${__dirname}/dhcpd.conf`;
+
+        await sftp.fastGet(remoteFile, localFile);
+
+        console.log("✅ dhcpd.conf downloaded");
+
+    } catch (error) {
+
+        console.error("❌ SFTP error:", error);
+
+    } finally {
+
+        await sftp.end();
+
+    }
+}
+
+downloadDhcpConfig();

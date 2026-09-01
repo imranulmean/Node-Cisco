@@ -18,13 +18,13 @@ import { authMiddleware, checkSession, loginController, logout, socketSession } 
 import { addRouter } from './controllers/addRouter.controller.js';
 import mongoose from 'mongoose';
 import { saveSession, saveToDb, getRouterSessions, addDownTime, generateReport2 } from './controllers/saveDb.controller.js';
-import { getDowntimeFiles, getLocalFiles, uploadLocal, uploadPic } from './controllers/upload.controller.js';
+import { getDowntimeFiles, getLocalFiles, uploadLocal } from './controllers/upload.controller.js';
 import { snmpStatus } from './controllers/snmp.controller.js';
 import { deleteAllMail, deleteSentMail, getSentMails, sendMail } from './controllers/mail.controller.js';
 import administrationRoutes  from './routes/administration.route.js';
 import scheduleRoutes  from './routes/schedule.route.js';
 import { Schedule } from './models/schedule.model.js';
-import { ipscan } from './controllers/ipscan.controller.js';
+import { dhcpIpScan, downloadDhcpConfig, ipscan } from './controllers/ipscan.controller.js';
 
 dotenv.config();
 mongoose
@@ -50,6 +50,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+app.use(express.static(path.join(__dirname, 'client/dist')));
+app.use('/localFolder', express.static(path.join(__dirname, 'public/localFolder')));
+app.use('/backups', express.static(path.join(__dirname, 'public/backups')));
 
 const io = new Server(server, {
     cors: {
@@ -58,7 +61,9 @@ const io = new Server(server, {
       credentials: true
     }
   });
+
   app.set("io", io)
+
   function stripAnsiAndControls(str) {
     // Remove ANSI escape sequences like \x1b[D
     return str.replace(/\x1B\[[0-9;]*[A-Za-z]/g, "");
@@ -555,9 +560,10 @@ app.post('/addDownTime', authMiddleware, addDownTime);
 //////////////Save Loacl uploaded Files ////
 app.get("/getLocalFiles", getLocalFiles);
 app.post("/uploadLocal", uploadLocal);
-app.post("/uploadPic", uploadPic);
 
 app.get('/ipscan/:network/:subnetMask/:secretCode', ipscan);
+app.get('/dhcpIpScan', dhcpIpScan);
+app.get('/downloadDhcpConfig', authMiddleware, downloadDhcpConfig);
 
 ///////////// Get Downtime Files and save Downtime ////
 app.get('/getDowntimeFiles', getDowntimeFiles);
@@ -584,6 +590,10 @@ app.get('/getBranchContacts', (req, res)=>{
   const { branchContact }= JSON.parse(fs.readFileSync(`branch_contacts.json`,'utf8'));
   res.json({success:true, branchContact});
 })
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/dist/index.html'));
+});
 
 server.listen(3000, () => {
   console.log('Server is running on port 3000!');

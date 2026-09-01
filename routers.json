@@ -336,7 +336,7 @@
    "name": "Mouchak",
    "branchId": 24,
    "authType": "local",
-   "routerType": "sdwan",
+   "routerType": "mikrotik",
    "isp1Name": "A.D.N",
    "isp1Source": "10.154.72.150",
    "isp1Dest": "10.168.227.46",
@@ -344,7 +344,8 @@
    "isp2Source": "10.154.16.90",
    "isp2Dest": "10.41.209.214",
    "branchType": "branch",
-   "addedBy": "imranul"
+   "addedBy": "imranul",
+   "mikrotik": "yes"   
   },
   {
    "host": "192.168.163.1",
@@ -591,7 +592,7 @@
    "name": "Islampur",
    "branchId": 41,
    "authType": "local",
-   "routerType": "sdwan",
+   "routerType": "legacy",
    "isp1Name": "ALAP",
    "isp1Source": "10.154.16.114",
    "isp1Dest": "10.41.209.214",
@@ -717,7 +718,7 @@
    "isp1Source": "10.154.21.162",
    "isp1Dest": "10.41.209.214",
    "isp2Name": "BDCOM",
-   "isp2Source": "10.154.14.18",
+   "isp2Source": "10.154.14.182",
    "isp2Dest": "10.255.31.122",
    "branchType": "branch",
    "addedBy": "imranul"

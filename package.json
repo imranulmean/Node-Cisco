@@ -8,7 +8,7 @@
     "dev": "node api/index_socket.js",
     "sendMail": "node sendMail.js",
     "deletefiles": "node DeleteFiles.js",
-    "vlan": "node vlan.js",
+    "vlan": "node otherScripts/vlan.js",
     "sendCommand": "node SendCommand-gem.js",
     "convertJson": "node otherScripts/convertToJSON.js",
     "convertExcel": "node otherScripts/convertToEXEL.js",
@@ -16,7 +16,8 @@
     "edited": "node editedRouter.js",
     "ipscan": "node otherScripts/ipscan.js",
     "start": "node api/index.js",
-    "build": "npm install && npm install --prefix client && npm run build --prefix client"
+    "build": "npm install && npm install --prefix client && npm run build --prefix client",
+    "build:server": "node build-obfuscate.mjs"
   },
   "author": "",
   "license": "ISC",
@@ -46,8 +47,14 @@
     "sharp": "^0.35.3",
     "socket.io": "^4.8.3",
     "ssh2": "^1.17.0",
+    "ssh2-sftp-client": "^12.1.1",
     "tesseract.js": "^7.0.0",
     "ws": "^8.16.0",
     "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "fs-extra": "^11.4.0",
+    "globby": "^16.2.4",
+    "javascript-obfuscator": "^5.6.0"
   }
 }

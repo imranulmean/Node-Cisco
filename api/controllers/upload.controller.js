@@ -5,9 +5,11 @@ import { getSession } from './login.controller.js';
 import { addDownTime } from './saveDb.controller.js';
 import moment from 'moment';
 
+const localFolder='public/localFolder';
+
 const storageLocal = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "client/public/localFolder");
+        cb(null, localFolder);
     },
     filename: (req, file, cb) => {
         // cb(null, ${new Date().getTime()}-${file.originalname});
@@ -18,20 +20,7 @@ const storageLocal = multer.diskStorage({
 });
 
 
-const storagePic = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, "client/public/profile");
-    },
-    filename: (req, file, cb) => {
-        const username = req.body.username;
-        // const ext = path.extname(file.originalname);
-        cb(null, `${username}.png`); // imraunl.png
-    },
-});
-
 const uploadLocalMul = multer({ storage:storageLocal });  
-const uploadPicMul= multer({ storage:storagePic });  
-
 
 export const uploadLocal = async(req, res)=>{    
     uploadLocalMul.array("files")(req, res, async (err) => {
@@ -64,7 +53,7 @@ export const uploadLocal = async(req, res)=>{
     });
 }
 export const getLocalFiles= async (req, res) =>{
-    const localFilesFolder='client/public/localFolder';
+    const localFilesFolder=localFolder;
     const localFiles=[];
     try {
       const entries = await fs.readdir(localFilesFolder, { withFileTypes: true });
@@ -109,23 +98,4 @@ export const getDowntimeFiles= async (req, res) =>{
     } catch (err) {
       console.error(err.message);
     }  
-}
-
-  export const uploadPic = async(req, res)=>{    
-    uploadPicMul.array("file")(req, res, (err) => {
-        try {
-            if (err) {
-                console.error("Multer Error:", err);
-                return res.status(500).json({ error: err.message });
-            }
-
-            if (!req.files || req.files.length === 0) {
-                return res.status(400).json({ error: "No files uploaded" });
-            }
-            res.json({ success: true, count: req.files.length,});
-        } catch (error) {
-            console.error("Server Error:", error);
-            res.status(500).json({ error: "Internal Server Error" });
-        }
-    });
 }

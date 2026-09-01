@@ -334,13 +334,25 @@ export default function SendMailCompo({mainData, branches, subBranches, socketRe
             });
     
             const data = await res.json();
+            console.log(data.success)
             // alert(data.message);
-            Swal.fire({
-                icon: "success",
-                title: "Success..",
-                text: `${data.message}`,
-                confirmButtonColor: "#000000",
-            });            
+            if(!data.success){
+                Swal.fire({
+                    icon: "error",
+                    title: "Failed",
+                    text: `${data.message}`,
+                    confirmButtonColor: "#000000",
+                });                 
+            }
+            else{
+                Swal.fire({
+                    icon: "success",
+                    title: "Success..",
+                    text: `${data.message}`,
+                    confirmButtonColor: "#000000",
+                }); 
+            }
+           
             if(data.message==='No token' || data.message==='Invalid token'){
                 localStorage.removeItem('sessionToken')
                 localStorage.removeItem('username')

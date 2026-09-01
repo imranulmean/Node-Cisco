@@ -22,6 +22,7 @@ import UpDownStatPage from './pages/UpDownStatPage';
 import UploadFiles from './pages/UploadFiles';
 import ChangePassword from './pages/Administration/ChangePassword';
 import IpScan from './pages/IpScan';
+import DhcpIpScan from './pages/DhcpIpScan';
 export default function App(){
 
   return(
@@ -38,6 +39,7 @@ export default function App(){
         <Route path='/ipPhones' element={<IpPhones />} />
         <Route path='/administration/login' element={<LoginUser />} />
         <Route path='/ipscan' element={<IpScan />} />
+        <Route path='/dhcpipscan' element={<DhcpIpScan />} />
         <Route element={<PrivateRoute />}>           
           <Route path='/' element={<PushConfigPage />} />
           <Route path='/push-config' element={<PushConfigPage />} />

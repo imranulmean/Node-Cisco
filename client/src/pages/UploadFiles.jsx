@@ -7,6 +7,7 @@ import UploadFileCompo from "../components/UploadFileCompo";
 export default function UploadFiles(){
 
     const BASE_API=import.meta.env.VITE_API_BASE_URL;
+
     const [localFiles, setLocalFiles]=useState([]);
 
     const fileUploadOptions = {
@@ -46,7 +47,7 @@ export default function UploadFiles(){
                                 <div className="flex items-center space-x-4">
                                   <div className="min-w-0 flex-1">
                                     <p className="text-sm font-medium text-gray-900 dark:text-white">
-                                      <a href={d.url} target="_blank">{d.filleName}</a>
+                                      <a href={`${BASE_API}${d.url}`} target="_blank">{d.filleName}</a>
                                     </p>
                                   </div>
                                   <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">

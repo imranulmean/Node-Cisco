@@ -4,6 +4,8 @@ import fs from 'fs/promises';
 import path from 'path';
 import { saveSession } from "./saveDb.controller.js";
 
+const backupFolder='public/backups';
+
 async function isRouterAlive(host) {
     try {
         const res = await ping.promise.probe(host, { timeout: 2 });
@@ -108,7 +110,6 @@ function pushConfig(router, commands, mode, routerCreds) {
 }
  
 export const backups= async (req, res) =>{
-  const backupFolder='client/public/backups';
   const backupLinks=[];
   try {
     const entries = await fs.readdir(backupFolder, { withFileTypes: true });
@@ -149,7 +150,7 @@ export const pushConfig2 =  async(req, res)=>{
     if (mode === "backup" && routerRes.output) {
       try {
         // const backupFolder = path.join(process.cwd(), "client", "public");
-        const backupFolder='client/public/backups';
+
         const fileName = `${routerData.branchId}-${routerData.router}-${routerData.host}.txt`;
         const filePath = path.join(backupFolder, fileName);
         await fs.writeFile(filePath, routerRes.output, "utf8");
