@@ -3,6 +3,8 @@ import User from '../models/user.model.js';
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import MailLog from '../models/mailSent.model.js';
+import moment from 'moment';
+import fs from 'fs';
 
 
 export const verifyToken = (req, res, next) => {
@@ -88,6 +90,32 @@ router.post('/deleteMail',verifyToken, async(req, res)=>{
         res.json({success:false, message: error.message});
     }
 })
+
+async function getTodayFile(lastDownTime) {
+    const moment_Readable_Date= moment(lastDownTime, "MMMM Do YYYY, h:mm:ss a").format("MMMM Do YYYY, h:mm:ss a");
+    const momentParsingDate= moment(lastDownTime, "MMMM Do YYYY, h:mm:ss a");
+    for (let i = 0; i <= 2; i++) {
+      const file = `downtime_folder/${momentParsingDate.subtract(i, 'days').format('DD-MM-YYYY')}.json`;
+      if (fs.existsSync(file)) {
+        return file;
+      }
+    }
+    return `Nothing Found`;
+  }
+
+router.post('/getUptime',verifyToken, async(req, res)=>{
+    try {
+        const { mailId, branchId, router, lastDownTime } = req.body;
+        
+        const todayFile = await getTodayFile(lastDownTime);
+        const {routers} = JSON.parse(fs.readFileSync(todayFile, "utf8"));
+        const upTime = routers.filter(d =>  Number(branchId)===d.result.branchId && router.includes(d.result.router));
+        res.json({success: true, message: upTime, todayFile});
+    } catch (error) {
+        res.json({success:false, message: 'Nothing Found'});
+    }
+})
+
 
 router.get('/checkToken', verifyToken, async(req, res)=>{
     res.json({success:true, message:"Authenticated"})

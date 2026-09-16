@@ -84,7 +84,7 @@ export default function UsersCompo(){
     ////////////////////////    
     
     return (
-        <div className="h-[400px] overflow-auto flex flex-col gap-3">
+        <div className="max-w-sm w-full h-[400px] overflow-auto flex flex-col gap-3">
 
             <div className="flex items-center justify-between mb-2">
                 <div>

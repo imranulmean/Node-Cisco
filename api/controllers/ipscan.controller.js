@@ -262,12 +262,18 @@ const config = {
     password: process.env.DHCP_PASSWORD
 };
 
+let downloading= false;
+
 export const downloadDhcpConfig = async(req, res) =>{
 
     try {
 
-        await sftp.connect(config);
+        if(downloading){
+            return res.json({success:true, message: 'Someone Already working .... '});    
+        }
 
+        downloading=true;
+        await sftp.connect(config);
         const remoteFile = "/etc/dhcp/dhcpd.conf";
         const localFile = `public/localFolder/dhcpd.conf`;
 
@@ -277,13 +283,15 @@ export const downloadDhcpConfig = async(req, res) =>{
 
     } catch (error) {
 
-        res.json({success: false, message: error.message});
+        res.json({success: false, message: 'There is an error ...'});
 
-    } finally {
+    } finally {        
         try {
             await sftp.end();
+            downloading=false;
         } catch (error) {
             console.error("SFTP close error:", error);
+            downloading=false;
         }
     }
 }

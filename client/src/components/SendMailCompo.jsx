@@ -244,9 +244,10 @@ export default function SendMailCompo({mainData, branches, subBranches, socketRe
     }
 
     const createMailList = (branchList) =>{
+        const thresoldTime=5;
         branchList.map(branch => {
             const branchType= branch.branchType==='branch' ? 'Branch' : 'Sub Branch'
-            if(branch.isp1LastDownTimeMins && branch.isp1LastDownTimeMins>5){     
+            if(branch.isp1LastDownTimeMins && branch.isp1LastDownTimeMins>thresoldTime){     
                 let branchObj={
                     branchId:branch.branchId, 
                     router:`${branch.router} ${branchType}`, 
@@ -259,7 +260,7 @@ export default function SendMailCompo({mainData, branches, subBranches, socketRe
                 mailList.push(branchObj);
             }
 
-            if(branch.isp2LastDownTimeMins && branch.isp2LastDownTimeMins>10){
+            if(branch.isp2LastDownTimeMins && branch.isp2LastDownTimeMins>thresoldTime){
                 let branchObj={
                     branchId:branch.branchId, 
                     router:`${branch.router} ${branchType}`, 
@@ -282,7 +283,8 @@ export default function SendMailCompo({mainData, branches, subBranches, socketRe
             const tempContacts=branchContacts.filter((contact)=>{
                 let siteName=contact['Site Name'].split(' ')[0].trim();
                 // siteName= siteName.toLowerCase().substring(0,6)
-                if(siteName.includes(parsedbranchName)){
+                // if(siteName.includes(parsedbranchName)){
+                if(siteName === parsedbranchName){                    
                     // console.log( contact['Designation'],contact['Site Name'], contact['Mobile'])
                     return contact
                 }

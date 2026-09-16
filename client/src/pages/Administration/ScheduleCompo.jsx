@@ -76,7 +76,7 @@ export default function ScheduleCompo() {
     const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 
     return (
-        <div className="max-w-xl mx-auto flex flex-col gap-3">
+        <div className="max-w-xs w-full flex flex-col gap-3">
 
             {/* kill switch */}
             <div className="bg-white border border-gray-200 rounded-xl p-4 flex items-center justify-between">

@@ -184,13 +184,13 @@ const openTerminal = (router) => {
                 sessionToken={sessionToken}
                 onClose={() => setShowTerminal(false)} 
             />            
-            <Modal size='xxl' show={openModal} onClose={() => setOpenModal(false)}>
-                <ModalBody>
+            <Modal size='xl' show={openModal} onClose={() => setOpenModal(false)}>
+                <ModalBody >
                     <div className="w-full">
                         <div className="mb-2 block">
                             <Label htmlFor="comment">Input Command</Label>
                         </div>
-                        <Textarea onChange={handleChange} id="comment" placeholder="Set Commands here" required rows={4} />
+                        <Textarea onChange={handleChange} id="comment" placeholder="Set Commands here" required rows={1} />
                     {
                         !loading &&
                         <div className="flex gap-2 p-2">
@@ -217,18 +217,21 @@ const openTerminal = (router) => {
                                 </span>
                             )}
                         </h1>
-
-                        <Textarea className="bg-gray-900 text-white placeholder-gray-500"
-                            value={combinedOutput} placeholder="Output will be shown here" rows={10}/>
+                        {
+                            loading &&
+                            <h2>Loading Data ...</h2>
+                        }
+                        <Textarea className="bg-gray-300 text-gray-800 placeholder-gray-500"
+                            value={combinedOutput} placeholder="Output will be shown here" rows={18}/>
                     </div>                    
                 </ModalBody>
-                <ModalFooter>
+                {/* <ModalFooter>
                     {
                         loading &&
                         <h2>Loading Data</h2>
                     }
                    
-                </ModalFooter>            
+                </ModalFooter>             */}
             </Modal>             
             <table id="bulkActionTable" class="cell-border display nowrap compact">
                 <thead>

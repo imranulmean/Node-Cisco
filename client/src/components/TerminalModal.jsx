@@ -59,11 +59,11 @@ export default function TerminalModal({ router, show, onClose, sessionToken }) {
   }, [show]);
 
   return (
-    <Modal show={show} size="xxxl" onClose={onClose} style={{'height':'100vh'}}>
+    <Modal show={show} size="xxl" onClose={onClose} >
       <ModalHeader className='px-2 py-0'>Terminal: {router?.router}</ModalHeader>
-      <ModalBody className='p-2' style={{'height':'100vh'}}>
+      <ModalBody className='p-2' >
         {/* Notice we pass the function terminalDivRef here, not a ref object */}
-        <div ref={terminalDivRef} style={{'height':'100vh'}}/>
+        <div ref={terminalDivRef} />
       </ModalBody>
     </Modal>
   );

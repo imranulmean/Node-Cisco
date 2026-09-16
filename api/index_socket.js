@@ -458,35 +458,40 @@ async function main() {
   }
 
   function checkAndRun() {
-    
-    // todayFile = `downtime_folder/${moment().format('DD-MM-YYYY')}.json`;
-    todayFile = getTodayFile();
-    const logDate = new Date();    
-    if (!fs.existsSync(todayFile)) {
-        console.log(`Creating ${todayFile}`);
-        const initial = routers.map(rt => ({
-            result: {
-                logDate,
-                branchId: rt.branchId, 
-                router: rt.name, 
-                branchType: rt.branchType, 
-                authType:rt.authType, 
-                host: rt.host, 
-                routerType: rt.routerType, 
-                mikrotik: rt.mikrotik || "no",
-                results: {
-                    isp1: { name: rt.isp1Name, dest: rt.isp1Dest, source: rt.isp1Source, prevStatus: "UP", status: "UP", downTimes: [], upTimes: [], totalDownTime: "", totalDownTimeMins:0 },
-                    isp2: { name: rt.isp2Name, dest: rt.isp2Dest, source: rt.isp2Source, prevStatus: "UP", status: "UP", downTimes: [], upTimes: [], totalDownTime: "", totalDownTimeMins:0 }
-                }
-            }
-        }));        
-        fs.writeFileSync(todayFile, JSON.stringify({ routers: initial }, null, 1));
+    try{
+      // todayFile = `downtime_folder/${moment().format('DD-MM-YYYY')}.json`;
+      todayFile = getTodayFile();
+      const logDate = new Date();    
+      if (!fs.existsSync(todayFile)) {
+          console.log(`Creating ${todayFile}`);
+          const initial = routers.map(rt => ({
+              result: {
+                  logDate,
+                  branchId: rt.branchId, 
+                  router: rt.name, 
+                  branchType: rt.branchType, 
+                  authType:rt.authType, 
+                  host: rt.host, 
+                  routerType: rt.routerType, 
+                  mikrotik: rt.mikrotik || "no",
+                  results: {
+                      isp1: { name: rt.isp1Name, dest: rt.isp1Dest, source: rt.isp1Source, prevStatus: "UP", status: "UP", downTimes: [], upTimes: [], totalDownTime: "", totalDownTimeMins:0 },
+                      isp2: { name: rt.isp2Name, dest: rt.isp2Dest, source: rt.isp2Source, prevStatus: "UP", status: "UP", downTimes: [], upTimes: [], totalDownTime: "", totalDownTimeMins:0 }
+                  }
+              }
+          }));        
+          fs.writeFileSync(todayFile, JSON.stringify({ routers: initial }, null, 1));
+      }
+      if(upDownInfo.length<1 && fs.existsSync(todayFile)){
+        const {routers} = JSON.parse(fs.readFileSync(todayFile, "utf8"));
+        upDownInfo=routers;
+      }
+      main();
+    }catch(err){
+      console.log(err.message)
+      fs.unlinkSync(todayFile);
+      checkAndRun();
     }
-    if(upDownInfo.length<1 && fs.existsSync(todayFile)){
-      const {routers} = JSON.parse(fs.readFileSync(todayFile, "utf8"));
-      upDownInfo=routers;
-    }
-    main();
   }
 
 // Start immediately and then every 5 minutes
