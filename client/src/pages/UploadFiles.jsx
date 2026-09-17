@@ -37,35 +37,53 @@ export default function UploadFiles(){
               (
                 <p>No files</p>
               ):(
-                <Card >
-                <div className="flow-root">
-                  <ul className="divide-y divide-gray-200 dark:divide-gray-700">
+                <>
+                  {/* <Card >
+                    <div className="flow-root">
+                      <ul className="divide-y divide-gray-200 dark:divide-gray-700">
+                        {
+                          localFiles.map(d=>{ 
+                              return(
+                                  <li className="pb-0 pt-3 sm:pt-4">
+                                    <div className="flex items-center space-x-4">
+                                      <div className="min-w-0 flex-1">
+                                        <p className="text-sm font-medium text-gray-900 dark:text-white">
+                                          <a href={`${BASE_API}${d.url}`} target="_blank">{d.filleName}</a>
+                                        </p>
+                                      </div>
+                                      <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                        {d.sizeMB} MB
+                                      </div>
+                                    </div>
+                                  </li>
+                              )                                            
+                          })
+                        }            
+      
+                      </ul>
+                    </div>
+                  </Card>                  */}
+                  <div className="h-[450px] overflow-y-auto flex flex-col gap-2 border border-gray-500 rounded-lg w-full p-4">
                     {
-                      localFiles.map(d=>{ 
+                      localFiles.map((d, index)=>{ 
                           return(
-                              <li className="pb-0 pt-3 sm:pt-4">
-                                <div className="flex items-center space-x-4">
-                                  <div className="min-w-0 flex-1">
-                                    <p className="text-sm font-medium text-gray-900 dark:text-white">
-                                      <a href={`${BASE_API}${d.url}`} target="_blank">{d.filleName}</a>
-                                    </p>
-                                  </div>
-                                  <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                    {d.sizeMB} MB
-                                  </div>
-                                </div>
-                              </li>
+                              <div className="p-2">
+                                <a href={`${BASE_API}${d.url}`} target="_blank" 
+                                  className="flex gap-2 text-sm font-medium text-gray-900 border-b border-gray-400">
+                                  <span className="">{index+1}{'-'}</span>
+                                  <span>{d.filleName}</span>
+                                  <span>{d.sizeMB} MB</span>                                       
+                                </a>
+                              </div>
                           )                                            
                       })
-                    }            
-  
-                  </ul>
-                </div>
-              </Card>                
+                    }                     
+                  </div>                  
+                </>              
               )
             }            
             {/* //////////////////////// */}
-          </div>    
+          </div>               
         </>
     )
 }

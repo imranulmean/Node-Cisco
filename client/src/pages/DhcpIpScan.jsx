@@ -121,9 +121,9 @@ export default function DhcpIpScan(){
     return(
         <>
             <HeaderPublic/>
-            <div className="flex">
-                <div className="p-2 w-full flex flex-col justify-center items-center">
-                    <div className="w-full flex gap-2 justify-center items-center mt-4">
+            <div className="flex gap-4 px-2 py-6 justify-center items-center">
+                <div className="w-full flex flex-col justify-center items-center gap-2">
+                    <div className="w-full flex gap-2 justify-center items-center">
 
                         <input type="text" value={queryString.trim()} placeholder="Search anything" onChange={(e)=>{setQueryString(e.target.value.trim());}}
                             class="max-w-md w-full px-3 py-2 bg-white-200 border border-gray-400 rounded-lg text-sm focus:ring-green-500 focus:border-green-500 outline:none" 
@@ -143,7 +143,7 @@ export default function DhcpIpScan(){
                         <p className="text-center font-bold text-gray-700">To Check Unused IP type #host</p>                        
                     </div>
 
-                    <div className="w-full flex flex-wrap gap-2 justify-center mt-4">
+                    <div className="w-full flex flex-wrap gap-2 justify-center">
                         <div className="w-full h-[450px] overflow-y-auto">
                             <table className="w-full text-sm text-left rtl:text-right text-body">
                                 <thead className="sticky top-0 bg-gray-900">
@@ -181,12 +181,12 @@ export default function DhcpIpScan(){
                 {/* /////////Duplicate Macs /////         */}
                 {
                     duplicateMacState.length>0 &&
-                    <div className="w-full p-2 flex flex-col justify-center items-center">
-                        <h1 className="text-lg text-gray-900">Find Duplicate Mac</h1>
+                    <div className="w-full flex flex-col justify-center items-center gap-2">
                         <input type="text" value={duplicateQueryString.trim()} placeholder="Search anything" onChange={(e)=>{setDuplicateQueryString(e.target.value.trim());}}
                             class="max-w-md w-full px-3 py-2 bg-white-200 border border-gray-400 rounded-lg text-sm focus:ring-green-500 focus:border-green-500 outline:none" 
                         />
-                        <div className="w-full flex flex-wrap gap-2 justify-center p-4 mt-4">
+                        <h1 className="text-lg text-gray-900">Find Duplicate Mac</h1>
+                        <div className="w-full flex flex-wrap gap-2 justify-center">
                             <div className="w-full h-[450px] overflow-y-auto">
                                 <table className="w-full text-sm text-left rtl:text-right text-body">
                                     <thead className="sticky top-0 bg-gray-900">
@@ -218,10 +218,10 @@ export default function DhcpIpScan(){
                                                 mac.records.map((record,index2)=>(
                                                     <>
                                                         {
-                                                        record.hostString.includes('#') ?
-                                                            <span className="text-red-800 font-bold">Disabled {record.hostString} </span>   
-                                                        :
-                                                        <span> {record.hostString} </span>      
+                                                            record.hostString.includes('#') ?
+                                                                <span className="text-red-800 font-bold">{record.hostString} </span>   
+                                                            :
+                                                            <span> {record.hostString} </span>      
                                                         }
                                                         <br/>
                                                     </>
