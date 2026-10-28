@@ -23,6 +23,7 @@ import UploadFiles from './pages/UploadFiles';
 import ChangePassword from './pages/Administration/ChangePassword';
 import IpScan from './pages/IpScan';
 import DhcpIpScan from './pages/DhcpIpScan';
+import SubBranchTunnels from './pages/SubBranchTunnels';
 export default function App(){
 
   return(
@@ -47,6 +48,7 @@ export default function App(){
           <Route path='/getRouterSessions' element={<RouterSessions />} />
           <Route path='/saveToDb' element={<SaveToDB />} />
           <Route path='/addDowntime' element={<AddDowntime />} />          
+          <Route path='/subBranchTunnels' element={<SubBranchTunnels />} />          
         </Route>
 
         <Route element={<AdminRoute />}>        

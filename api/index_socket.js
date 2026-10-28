@@ -25,6 +25,7 @@ import administrationRoutes  from './routes/administration.route.js';
 import scheduleRoutes  from './routes/schedule.route.js';
 import { Schedule } from './models/schedule.model.js';
 import { dhcpIpScan, downloadDhcpConfig, ipscan } from './controllers/ipscan.controller.js';
+import { getTunnelConfig, saveTunnelConfig } from './controllers/tunnelConfig.controller.js';
 
 dotenv.config();
 mongoose
@@ -569,6 +570,10 @@ app.post("/uploadLocal", uploadLocal);
 app.get('/ipscan/:network/:subnetMask/:secretCode', ipscan);
 app.get('/dhcpIpScan', dhcpIpScan);
 app.get('/downloadDhcpConfig', authMiddleware, downloadDhcpConfig);
+
+///// Tunnel Config ///
+app.get('/getTunnelConfig',authMiddleware, getTunnelConfig);
+app.put('/saveTunnelConfig',authMiddleware,saveTunnelConfig);
 
 ///////////// Get Downtime Files and save Downtime ////
 app.get('/getDowntimeFiles', getDowntimeFiles);

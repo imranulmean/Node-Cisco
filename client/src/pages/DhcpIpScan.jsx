@@ -126,15 +126,18 @@ export default function DhcpIpScan(){
                     <div className="w-full flex gap-2 justify-center items-center">
 
                         <input type="text" value={queryString.trim()} placeholder="Search anything" onChange={(e)=>{setQueryString(e.target.value.trim());}}
-                            class="max-w-md w-full px-3 py-2 bg-white-200 border border-gray-400 rounded-lg text-sm focus:ring-green-500 focus:border-green-500 outline:none" 
+                            class="max-w-sm w-full px-3 py-2 bg-white-200 border border-gray-400 rounded-lg text-sm focus:ring-green-500 focus:border-green-500 outline:none" 
                         />                            
-
+                        <button onClick={getData} disabled={loading}
+                                className="p-2 border bg-cyan-900 text-md text-white  rounded-lg">
+                                    {loading ? 'loading...' : 'Reload'}
+                        </button>
                         {
                             sessionToken &&
                             <button onClick={downloadDhcpConfig} disabled={loading}
                                     className="p-2 border bg-cyan-900 text-md text-white  rounded-lg">
-                                        {loading ? 'loading...' : 'If Data Not updated Click Here'}
-                            </button>                         
+                                        {loading ? 'loading...' : 'If Data Not updated Click'}
+                            </button>
                         }
                     
                     </div>

@@ -207,6 +207,10 @@ export default function Header(){
                                         >
                                             DHCP IP Scanner
                                         </Dropdown.Item>  
+                                        <Dropdown.Item as={Link} to="/subBranchTunnels"
+                                        >
+                                            Sub Branch Tunnel
+                                        </Dropdown.Item>                                          
                                     </div>
                                        
                                 </Dropdown>                                                                                               

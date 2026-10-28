@@ -8,12 +8,12 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 // const workbook = XLSX.readFile(path.join(__dirname, 'routersDetails.xlsx'))
-const workbook = XLSX.readFile('client/public/localFolder/all emp info may 2026.xls')
+const workbook = XLSX.readFile('C:/Users/Administrator/Desktop/Sub Brnach Mikrotik Script a/othre/Sub Branch Mikrotik Test/Sub Information_Test.xlsx')
 const sheet = workbook.Sheets[workbook.SheetNames[0]]
 const routersArray = XLSX.utils.sheet_to_json(sheet)
-const routersJSON = { branchContact:routersArray };
+const routersJSON = { subBranchTunnels:routersArray };
 
-const outputFile = path.join(__dirname, 'branch_contacts.json');
+const outputFile = path.join(__dirname, 'subBranchTunnels.json');
 writeFileSync(outputFile, JSON.stringify(routersJSON, null, 1));
 
 console.log(`✅ JSON file saved at ${outputFile}`);
